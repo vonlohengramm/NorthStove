@@ -1,68 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.21.0/dist/phaser.js"></script>
+    <script src="js/Const.js"></script>
+    <script src="js/PrefaceScene.js"></script>
+    <script src="js/MenuScene.js"></script>
 </head>
-<body height="100%">
+<body>
 
 <script>
     var config = {
         type: Phaser.AUTO,
-        width: 1500,
-        height: 1500,
-        // physics: {
-        //     default: 'arcade',
-        //     arcade: {
-        //         gravity: { y: 200 }
-        //     }
-        // },
-        scene: {
-            preload: preload,
-            create: create
-        }
+        width: SCENE_WIDTH * GENERAL_SCALE,
+        height: SCENE_HEIGHT * GENERAL_SCALE,
+        scene: [preface, menu],
+        //  Open the Dev Tools
+        //  The version of your game appears after the title in the banner
+        title: 'Painter',
+        version: '0.1'
     };
 
     var game = new Phaser.Game(config);
 
-    function preload ()
-    {
-        // this.scale.scaleMode = Phaser.ScaleManager.RESIZE;
-
-        this.load.image('east_1', 'png/east_1.png');
-        this.load.image('east_2', 'png/east_2.png');
-        this.load.image('east_3', 'png/east_3.png');
-        this.load.image('east_4', 'png/east_4.png');
-        this.load.image('colored', 'png/colored.png');
-    }
-
-    function create ()
-    {
-        this.add.image(750, 500, 'east_1').setScale(0.2);
-        this.add.image(750, 500, 'east_2').setScale(0.2);
-        this.add.image(710, 492, 'colored').setScale(0.2);
-        this.add.image(706, 483, 'east_3').setScale(0.2);
-        let east4 = this.add.image(704, 483, 'east_4');
-        east4.setScale(0.2);
-        // east4.setBlendMode(Phaser.BlendModes.MULTIPLY);
-
-        // var particles = this.add.particles('red');
-        //
-        // var emitter = particles.createEmitter({
-        //     speed: 100,
-        //     scale: { start: 1, end: 0 },
-        //     blendMode: 'ADD'
-        // });
-        //
-        // var logo = this.physics.add.image(400, 100, 'logo');
-        //
-        // logo.setVelocity(100, 200);
-        // logo.setBounce(1, 1);
-        // logo.setCollideWorldBounds(true);
-        //
-        // emitter.startFollow(logo);
-    }
 </script>
 
 </body>
-</html>

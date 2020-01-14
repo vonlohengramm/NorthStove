@@ -1,0 +1,3 @@
+var GENERAL_SCALE = 0.2;
+const SCENE_WIDTH = 6890;
+const SCENE_HEIGHT = 4134;
