@@ -26,7 +26,7 @@ preface.create =  function () {
     })
 
     this.input.once('pointerdown', function (event) {
-        console.log('pointerdown scene');
+        console.log('jump to menu scene');
         this.scene.start('menu');
     }, this);
 }
