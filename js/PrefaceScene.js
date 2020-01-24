@@ -23,7 +23,7 @@ preface.create =  function () {
         onLoop: function () {
             startAlpha = 1 - startAlpha;
         }
-    })
+    });
 
     this.input.once('pointerdown', function (event) {
         console.log('jump to menu scene');

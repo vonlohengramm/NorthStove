@@ -5,15 +5,19 @@
     <script src="js/Const.js"></script>
     <script src="js/PrefaceScene.js"></script>
     <script src="js/MenuScene.js"></script>
+    <script src="js/PaintScene.js"></script>
 </head>
 <body>
 
 <script>
     var config = {
         type: Phaser.AUTO,
-        width: SCENE_WIDTH * GENERAL_SCALE,
-        height: SCENE_HEIGHT * GENERAL_SCALE,
-        scene: [preface, menu],
+        scale: {
+            mode: Phaser.Scale.RESIZE,
+            width: SCENE_WIDTH * GENERAL_SCALE,
+            height: SCENE_HEIGHT * GENERAL_SCALE,
+        },
+        scene: [preface, menu, paint],
         //  Open the Dev Tools
         //  The version of your game appears after the title in the banner
         title: 'Painter',

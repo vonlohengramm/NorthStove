@@ -14,17 +14,17 @@ menu.create = function () {
     var prompt = this.add.image(3445 * GENERAL_SCALE, 3622 * GENERAL_SCALE, 'prompt-back').setScale(GENERAL_SCALE);
     var title = this.add.image(3445 * GENERAL_SCALE, 3622 * GENERAL_SCALE, 'menu-title').setScale(GENERAL_SCALE);
 
-    var pic1 = this.add.image(1986 * GENERAL_SCALE, 1031 * GENERAL_SCALE, 'pic-1').setScale(GENERAL_SCALE);
-    var pic2 = this.add.image(4990 * GENERAL_SCALE, 1031 * GENERAL_SCALE, 'pic-2').setScale(GENERAL_SCALE);
-    var pic3 = this.add.image(1986 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-3').setScale(GENERAL_SCALE);
-    var pic4 = this.add.image(4422 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-4').setScale(GENERAL_SCALE);
-    var pic5 = this.add.image(5649.5 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-5').setScale(GENERAL_SCALE);
+    var pic1 = this.add.image(1986 * GENERAL_SCALE, 1031 * GENERAL_SCALE, 'pic-1').setScale(GENERAL_SCALE).setInteractive();
+    var pic2 = this.add.image(4990 * GENERAL_SCALE, 1031 * GENERAL_SCALE, 'pic-2').setScale(GENERAL_SCALE).setInteractive();
+    var pic3 = this.add.image(1986 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-3').setScale(GENERAL_SCALE).setInteractive();
+    var pic4 = this.add.image(4422 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-4').setScale(GENERAL_SCALE).setInteractive();
+    var pic5 = this.add.image(5649.5 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-5').setScale(GENERAL_SCALE).setInteractive();
 
-    var picTitle2 = this.add.image(3308.5 * GENERAL_SCALE, 906.5 * GENERAL_SCALE, 'pic-title-1').setScale(GENERAL_SCALE);
-    var picTitle2 = this.add.image(6323.5 * GENERAL_SCALE, 906.5 * GENERAL_SCALE, 'pic-title-2').setScale(GENERAL_SCALE);
-    var picTitle3 = this.add.image(3308.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-3').setScale(GENERAL_SCALE);
-    var picTitle4 = this.add.image(5184.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-4').setScale(GENERAL_SCALE);
-    var picTitle5 = this.add.image(6323.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-5').setScale(GENERAL_SCALE);
+    var picTitle1 = this.add.image(3308.5 * GENERAL_SCALE, 906.5 * GENERAL_SCALE, 'pic-title-1').setScale(GENERAL_SCALE).setInteractive();
+    var picTitle2 = this.add.image(6323.5 * GENERAL_SCALE, 906.5 * GENERAL_SCALE, 'pic-title-2').setScale(GENERAL_SCALE).setInteractive();
+    var picTitle3 = this.add.image(3308.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-3').setScale(GENERAL_SCALE).setInteractive();
+    var picTitle4 = this.add.image(5184.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-4').setScale(GENERAL_SCALE).setInteractive();
+    var picTitle5 = this.add.image(6323.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-5').setScale(GENERAL_SCALE).setInteractive();
 
     var startAlpha = 1;
     this.tweens.add({
@@ -39,4 +39,35 @@ menu.create = function () {
             startAlpha = 1 - startAlpha;
         }
     })
+
+    pic1.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 1 });
+    }, this);
+    picTitle1.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 1 });
+    }, this);
+    pic2.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 2 });
+    }, this);
+    picTitle2.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 2 });
+    }, this);
+    pic3.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 3 });
+    }, this);
+    picTitle3.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 3 });
+    }, this);
+    pic4.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 4 });
+    }, this);
+    picTitle4.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 4 });
+    }, this);
+    pic5.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 5 });
+    }, this);
+    picTitle5.once('pointerdown', function(event) {
+        this.scene.start('paint', { pic: 5 });
+    }, this);
 }
