@@ -6,10 +6,20 @@ preface.preload = function () {
     this.load.image('preface-title', 'png/preface-title.png');
 }
 preface.create =  function () {
-    this.add.image(SCENE_WIDTH / 2 * GENERAL_SCALE, SCENE_HEIGHT / 2 * GENERAL_SCALE, 'preface-back').setScale(GENERAL_SCALE);
-    this.add.image(5176.5 * GENERAL_SCALE, 1235.5 * GENERAL_SCALE, 'logo').setScale(GENERAL_SCALE);
-    var prompt = this.add.image(3445 * GENERAL_SCALE, 3087 * GENERAL_SCALE, 'prompt-back').setScale(GENERAL_SCALE);
-    var title = this.add.image(3445 * GENERAL_SCALE, 3097 * GENERAL_SCALE, 'preface-title').setScale(GENERAL_SCALE);
+    var uiGroup = this.add.group('uiGroup');
+
+    uiGroup.add(this.add.image(SCENE_WIDTH / 2, SCENE_HEIGHT / 2, 'preface-back'));
+    uiGroup.add(this.add.image(5176.5, 1235.5, 'logo'));
+
+    var prompt = this.add.image(3445, 3087, 'prompt-back');
+    uiGroup.add(prompt);
+    var title = this.add.image(3445, 3097, 'preface-title');
+    uiGroup.add(title);
+
+    uiGroup.children.each(function (ui) {
+        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
+        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
+    });
 
     var startAlpha = 1;
     this.tweens.add({
