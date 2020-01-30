@@ -1,6 +1,7 @@
 var paint = new Phaser.Scene('paint'); // 涂色
 
 var selectPaint = 1;
+var colorIndex = 0;
 
 paint.init = function(data) {
     selectPaint = data.pic;
@@ -22,6 +23,8 @@ paint.preload = function(data) {
     for (let i in colorConfig) {
         this.load.image('color-' + i, 'png/colorText/color-' + i + '.png');
     }
+
+    this.load.image('select-color', 'png/pic-select.png');
 }
 
 paint.create = function() {
@@ -37,7 +40,6 @@ paint.create = function() {
     }
     for (let i = 0; i < config.paintNum; i++) {
         var image = this.add.image(2952.5, 2021.5, 'paint-' + i).setInteractive();
-        // image.setTint(0xff0000);
     }
     for (let i = 0; i < 2; i++) {
         picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-' + i));
@@ -48,16 +50,30 @@ paint.create = function() {
         pic.setPosition(pic.x * GENERAL_SCALE, pic.y * GENERAL_SCALE);
     });
 
+    var selectColorUI = this.add.image(colorConfig[colorIndex].x * GENERAL_SCALE, colorConfig[colorIndex].y * GENERAL_SCALE, 'select-color').setScale(GENERAL_SCALE, GENERAL_SCALE);
+    var changeColorTo = function (index) {
+        selectColorUI.setPosition(colorConfig[index].x * GENERAL_SCALE, colorConfig[index].y * GENERAL_SCALE);
+        colorIndex = index;
+        selectColorUI.depth = 10;
+    };
+
     var colorGroup = this.add.group('colorGroup');
     var game = this;
     colorConfig.forEach(function (color, i) {
-        colorGroup.add(game.add.image(color.x, color.y, 'color-back').setTint(color.color));
+        var colorUI = game.add.image(color.x, color.y, 'color-back').setTint(color.color).setInteractive();
+        colorGroup.add(colorUI);
         colorGroup.add(game.add.image(color.x, color.y, 'color-' + i));
+        colorUI.on('pointerdown', function (event) {
+            console.log('select color: ' + this.index);
+            changeColorTo(this.index);
+        }, {index: i});
     });
     colorGroup.children.each(function (ui) {
         ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
         ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
     });
+
+    changeColorTo(colorIndex);
 
     var prompt = this.add.image(3445, 3622, 'prompt-back');
     uiGroup.add(prompt);
