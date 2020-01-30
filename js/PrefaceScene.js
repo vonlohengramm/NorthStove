@@ -17,8 +17,8 @@ preface.create =  function () {
     uiGroup.add(title);
 
     uiGroup.children.each(function (ui) {
-        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
         ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
+        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
     });
 
     var startAlpha = 1;

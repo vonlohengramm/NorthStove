@@ -20,16 +20,19 @@ paint.preload = function(data) {
 }
 
 paint.create = function() {
-    for (let i = 0; i <= 2; i++) {
-        this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-back-' + i).setScale(GENERAL_SCALE);   
-    }
-
-    for (let i = 0; i <= 6; i++) {
-        this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE).setInteractive();
-    }
+    var config = picConfig[selectPaint - 1];
 
     for (let i = 0; i <= 2; i++) {
-        this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-head-' + i).setScale(GENERAL_SCALE);   
+        this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-back-' + i).setScale(GENERAL_SCALE);
+    }
+
+    for (let i = 0; i < config.paintNum; i++) {
+        var image = this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE).setInteractive();
+        // image.setTint(0xff0000);
+    }
+
+    for (let i = 0; i <= 2; i++) {
+        this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-head-' + i).setScale(GENERAL_SCALE);
     }
 
     var prompt = this.add.image(3445 * GENERAL_SCALE, 3622 * GENERAL_SCALE, 'prompt-back').setScale(GENERAL_SCALE);

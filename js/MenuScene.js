@@ -10,21 +10,42 @@ menu.preload = function () {
 
 }
 menu.create = function () {
-    this.add.image(SCENE_WIDTH / 2 * GENERAL_SCALE, SCENE_HEIGHT / 2 * GENERAL_SCALE, 'menu-back').setScale(GENERAL_SCALE);
-    var prompt = this.add.image(3445 * GENERAL_SCALE, 3622 * GENERAL_SCALE, 'prompt-back').setScale(GENERAL_SCALE);
-    var title = this.add.image(3445 * GENERAL_SCALE, 3622 * GENERAL_SCALE, 'menu-title').setScale(GENERAL_SCALE);
+    var uiGroup = this.add.group('uiGroup');
+    uiGroup.add(this.add.image(SCENE_WIDTH / 2, SCENE_HEIGHT / 2, 'menu-back'));
+    var prompt = this.add.image(3445, 3622, 'prompt-back');
+    uiGroup.add(prompt);
+    var title = this.add.image(3445, 3622, 'menu-title');
+    uiGroup.add(title);
 
-    var pic1 = this.add.image(1986 * GENERAL_SCALE, 1031 * GENERAL_SCALE, 'pic-1').setScale(GENERAL_SCALE).setInteractive();
-    var pic2 = this.add.image(4990 * GENERAL_SCALE, 1031 * GENERAL_SCALE, 'pic-2').setScale(GENERAL_SCALE).setInteractive();
-    var pic3 = this.add.image(1986 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-3').setScale(GENERAL_SCALE).setInteractive();
-    var pic4 = this.add.image(4422 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-4').setScale(GENERAL_SCALE).setInteractive();
-    var pic5 = this.add.image(5649.5 * GENERAL_SCALE, 2602 * GENERAL_SCALE, 'pic-5').setScale(GENERAL_SCALE).setInteractive();
+    uiGroup.children.each(function (ui) {
+        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
+        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
+    });
 
-    var picTitle1 = this.add.image(3308.5 * GENERAL_SCALE, 906.5 * GENERAL_SCALE, 'pic-title-1').setScale(GENERAL_SCALE).setInteractive();
-    var picTitle2 = this.add.image(6323.5 * GENERAL_SCALE, 906.5 * GENERAL_SCALE, 'pic-title-2').setScale(GENERAL_SCALE).setInteractive();
-    var picTitle3 = this.add.image(3308.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-3').setScale(GENERAL_SCALE).setInteractive();
-    var picTitle4 = this.add.image(5184.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-4').setScale(GENERAL_SCALE).setInteractive();
-    var picTitle5 = this.add.image(6323.5 * GENERAL_SCALE, 2468.5 * GENERAL_SCALE, 'pic-title-5').setScale(GENERAL_SCALE).setInteractive();
+    var picGroup = this.add.group('picGroup');
+    var game = this;
+    picConfig.forEach(function (v, i) {
+       var pic = game.add.image(v.x, v.y, 'pic-' + (i + 1));
+       var picTitle = game.add.image(v.titleX, v.titleY, 'pic-title-' + (i + 1));
+       var id = i + 1;
+       picGroup.add(pic);
+       picGroup.add(picTitle);
+       pic.once('pointerdown', function(event) {
+           console.log('jump to paint scene with id: ' + id);
+           game.scene.start('paint', { pic: i + 1 });
+       }, game);
+       picTitle.once('pointerdown', function(event) {
+           console.log('jump to paint scene with id: ' + id);
+           game.scene.start('paint', { pic: i + 1 });
+       }, game);
+       picTitle.depth = 10; // title on top
+    });
+
+    picGroup.children.each(function (pic) {
+        pic.setPosition(pic.x * GENERAL_SCALE, pic.y * GENERAL_SCALE);
+        pic.setScale(GENERAL_SCALE, GENERAL_SCALE);
+        pic.setInteractive();
+    });
 
     var startAlpha = 1;
     this.tweens.add({
@@ -38,36 +59,5 @@ menu.create = function () {
         onLoop: function () {
             startAlpha = 1 - startAlpha;
         }
-    })
-
-    pic1.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 1 });
-    }, this);
-    picTitle1.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 1 });
-    }, this);
-    pic2.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 2 });
-    }, this);
-    picTitle2.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 2 });
-    }, this);
-    pic3.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 3 });
-    }, this);
-    picTitle3.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 3 });
-    }, this);
-    pic4.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 4 });
-    }, this);
-    picTitle4.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 4 });
-    }, this);
-    pic5.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 5 });
-    }, this);
-    picTitle5.once('pointerdown', function(event) {
-        this.scene.start('paint', { pic: 5 });
-    }, this);
+    });
 }
