@@ -17,9 +17,17 @@ paint.preload = function(data) {
     for (let i = 0; i <= 6; i++) {
         this.load.image('paint-' + i, 'png/pic-' + selectPaint + '/paint-' + i + '.png');
     }
+
+    this.load.image('color-back', 'png/white-frame.jpg');
+    for (let i in colorConfig) {
+        this.load.image('color-' + i, 'png/colorText/color-' + i + '.png');
+    }
 }
 
 paint.create = function() {
+    var uiGroup = this.add.group('uiGroup');
+    uiGroup.add(this.add.image(SCENE_WIDTH / 2, SCENE_HEIGHT / 2, 'menu-back'));
+
     var config = picConfig[selectPaint - 1];
 
     var picGroup = this.add.group('picGroup');
@@ -40,7 +48,17 @@ paint.create = function() {
         pic.setPosition(pic.x * GENERAL_SCALE, pic.y * GENERAL_SCALE);
     });
 
-    var uiGroup = this.add.group('uiGroup');
+    var colorGroup = this.add.group('colorGroup');
+    var game = this;
+    colorConfig.forEach(function (color, i) {
+        colorGroup.add(game.add.image(color.x, color.y, 'color-back').setTint(color.color));
+        colorGroup.add(game.add.image(color.x, color.y, 'color-' + i));
+    });
+    colorGroup.children.each(function (ui) {
+        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
+        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
+    });
+
     var prompt = this.add.image(3445, 3622, 'prompt-back');
     uiGroup.add(prompt);
     var title = this.add.image(3445, 3632, 'paint-title');
