@@ -22,21 +22,33 @@ paint.preload = function(data) {
 paint.create = function() {
     var config = picConfig[selectPaint - 1];
 
-    for (let i = 0; i <= 2; i++) {
-        this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-back-' + i).setScale(GENERAL_SCALE);
-    }
+    var picGroup = this.add.group('picGroup');
 
+    for (let i = 0; i <= 2; i++) {
+        picGroup.add(this.add.image(2952.5, 2021.5, 'paint-back-' + i));
+    }
     for (let i = 0; i < config.paintNum; i++) {
-        var image = this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE).setInteractive();
+        var image = this.add.image(2952.5, 2021.5, 'paint-' + i).setInteractive();
         // image.setTint(0xff0000);
     }
-
-    for (let i = 0; i <= 2; i++) {
-        this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-head-' + i).setScale(GENERAL_SCALE);
+    for (let i = 0; i < 2; i++) {
+        picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-' + i));
     }
+    picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-2').setBlendMode(Phaser.BlendModes.MULTIPLY));
+    picGroup.children.each(function (pic) {
+        pic.setScale(GENERAL_SCALE, GENERAL_SCALE);
+        pic.setPosition(pic.x * GENERAL_SCALE, pic.y * GENERAL_SCALE);
+    });
 
-    var prompt = this.add.image(3445 * GENERAL_SCALE, 3622 * GENERAL_SCALE, 'prompt-back').setScale(GENERAL_SCALE);
-    var title = this.add.image(3445 * GENERAL_SCALE, 3632 * GENERAL_SCALE, 'paint-title').setScale(GENERAL_SCALE);
+    var uiGroup = this.add.group('uiGroup');
+    var prompt = this.add.image(3445, 3622, 'prompt-back');
+    uiGroup.add(prompt);
+    var title = this.add.image(3445, 3632, 'paint-title');
+    uiGroup.add(title);
+    uiGroup.children.each(function (ui) {
+        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
+        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
+    });
 
     var startAlpha = 1;
     this.tweens.add({
