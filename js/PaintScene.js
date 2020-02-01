@@ -39,7 +39,12 @@ paint.create = function() {
         picGroup.add(this.add.image(2952.5, 2021.5, 'paint-back-' + i));
     }
     for (let i = 0; i < config.paintNum; i++) {
-        var image = this.add.image(2952.5, 2021.5, 'paint-' + i).setInteractive();
+        var image = this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE, GENERAL_SCALE);
+        image.on('pointerdown', function (pointer) {
+            var obj = this;
+            obj.setTint(colorConfig[colorIndex].color);
+        }, image);
+        image.setInteractive({ pixelPerfect: true });
     }
     for (let i = 0; i < 2; i++) {
         picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-' + i));
@@ -84,17 +89,17 @@ paint.create = function() {
         ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
     });
 
-    var startAlpha = 1;
-    this.tweens.add({
-        targets: title,
-        duration: 1000,
-        alpha: {
-            getStart: () => startAlpha,
-            getEnd: () => 1 - startAlpha,
-        },
-        loop: -1,
-        onLoop: function () {
-            startAlpha = 1 - startAlpha;
-        }
-    })
+    // var startAlpha = 1;
+    // this.tweens.add({
+    //     targets: title,
+    //     duration: 1000,
+    //     alpha: {
+    //         getStart: () => startAlpha,
+    //         getEnd: () => 1 - startAlpha,
+    //     },
+    //     loop: -1,
+    //     onLoop: function () {
+    //         startAlpha = 1 - startAlpha;
+    //     }
+    // })
 }
