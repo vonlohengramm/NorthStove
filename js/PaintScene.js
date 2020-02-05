@@ -2,9 +2,11 @@ var paint = new Phaser.Scene('paint'); // 涂色
 
 var selectPaint = 1;
 var colorIndex = 0;
+var config = picConfig[selectPaint - 1];
 
 paint.init = function(data) {
     selectPaint = data.pic;
+    config = picConfig[selectPaint - 1];
 }
 
 paint.preload = function(data) {
@@ -15,7 +17,7 @@ paint.preload = function(data) {
         this.load.image('paint-head-' + i, 'png/pic-' + selectPaint + '/pre-' + i + '.png');
     }
 
-    for (let i = 0; i <= 6; i++) {
+    for (let i = 0; i < config.pngXY.length; i++) {
         this.load.image('paint-' + i, 'png/pic-' + selectPaint + '/paint-' + i + '.png');
     }
 
@@ -31,18 +33,18 @@ paint.create = function() {
     var uiGroup = this.add.group('uiGroup');
     uiGroup.add(this.add.image(SCENE_WIDTH / 2, SCENE_HEIGHT / 2, 'menu-back'));
 
-    var config = picConfig[selectPaint - 1];
-
     var picGroup = this.add.group('picGroup');
 
     for (let i = 0; i <= 2; i++) {
         picGroup.add(this.add.image(2952.5, 2021.5, 'paint-back-' + i));
     }
-    for (let i = 0; i < config.paintNum; i++) {
-        var image = this.add.image(2952.5 * GENERAL_SCALE, 2021.5 * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE, GENERAL_SCALE);
+    var pngXYConfig = config.pngXY;
+    for (let i = 0; i < pngXYConfig.length; i++) {
+        var image = this.add.image((pngXYConfig[i].x + 197) * GENERAL_SCALE, (pngXYConfig[i].y + 176) * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE, GENERAL_SCALE);
         image.on('pointerdown', function (pointer) {
             var obj = this;
             obj.setTint(colorConfig[colorIndex].color);
+            console.log(this);
         }, image);
         image.setInteractive({ pixelPerfect: true });
     }
