@@ -27,24 +27,44 @@ paint.preload = function(data) {
     }
 
     this.load.image('select-color', 'png/pic-select.png');
+
+    this.load.image('finish-btn-back', 'png/finish-btn-back.png');
+    this.load.image('finish-btn-fore', 'png/finish-btn-fore.png');
+    this.load.image('finish-btn-txt', 'png/finish-btn-txt.png');
 }
 
 paint.create = function() {
-    var uiGroup = this.add.group('uiGroup');
-    uiGroup.add(this.add.image(SCENE_WIDTH / 2, SCENE_HEIGHT / 2, 'menu-back'));
+    const promptGroup = this.add.group('promptGroup');
+    promptGroup.add(this.add.image(SCENE_WIDTH / 2, SCENE_HEIGHT / 2, 'menu-back'));
 
-    var picGroup = this.add.group('picGroup');
+    const finishBtnGroup = this.add.group('finishBtnGroup');
+    
+    function setGroupVisible(group, visible) {
+        group.children.each(function (gameObject) {
+           gameObject.visible = visible;
+        });
+    }
+
+    var prompt; // ui variable
+    var title;
+
+    var finishBtnBack; // btn variable
+    var finishBtnFore;
+    var finishBtnTxt;
+
+    const picGroup = this.add.group('picGroup');
 
     for (let i = 0; i <= 2; i++) {
         picGroup.add(this.add.image(2952.5, 2021.5, 'paint-back-' + i));
     }
-    var pngXYConfig = config.pngXY;
+    const pngXYConfig = config.pngXY;
     for (let i = 0; i < pngXYConfig.length; i++) {
         var image = this.add.image((pngXYConfig[i].x + 197) * GENERAL_SCALE, (pngXYConfig[i].y + 176) * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE, GENERAL_SCALE);
         image.on('pointerdown', function (pointer) {
             var obj = this;
             obj.setTint(colorConfig[colorIndex].color);
-            console.log(this);
+            setGroupVisible(promptGroup, false);
+            setGroupVisible(finishBtnGroup, true);
         }, image);
         image.setInteractive({ pixelPerfect: true });
     }
@@ -64,8 +84,8 @@ paint.create = function() {
         selectColorUI.depth = 10;
     };
 
-    var colorGroup = this.add.group('colorGroup');
-    var game = this;
+    const colorGroup = this.add.group('colorGroup');
+    const game = this;
     colorConfig.forEach(function (color, i) {
         var colorUI = game.add.image(color.x, color.y, 'color-back').setTint(color.color).setInteractive();
         colorGroup.add(colorUI);
@@ -82,26 +102,30 @@ paint.create = function() {
 
     changeColorTo(colorIndex);
 
-    var prompt = this.add.image(3445, 3622, 'prompt-back');
-    uiGroup.add(prompt);
-    var title = this.add.image(3445, 3632, 'paint-title');
-    uiGroup.add(title);
-    uiGroup.children.each(function (ui) {
+    prompt = this.add.image(3445, 3622, 'prompt-back');
+    promptGroup.add(prompt);
+    title = this.add.image(3445, 3632, 'paint-title');
+    promptGroup.add(title);
+
+    finishBtnBack = this.add.image(4833, 3620, 'finish-btn-back');
+    finishBtnGroup.add(finishBtnBack);
+    // finishBtnFore = this.add.image(4833, 3620, 'finish-btn-fore');
+    // promptGroup.add(finishBtnFore);
+    finishBtnTxt = this.add.image(4833, 3606, 'finish-btn-txt');
+    finishBtnGroup.add(finishBtnTxt);
+    finishBtnBack.once('pointerdown', function (event) {
+        console.log('jump to post card scene');
+        this.scene.start('postCard');
+    });
+
+    promptGroup.children.each(function (ui) {
+        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
+        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
+    });
+    finishBtnGroup.children.each(function (ui) {
         ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
         ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
     });
 
-    // var startAlpha = 1;
-    // this.tweens.add({
-    //     targets: title,
-    //     duration: 1000,
-    //     alpha: {
-    //         getStart: () => startAlpha,
-    //         getEnd: () => 1 - startAlpha,
-    //     },
-    //     loop: -1,
-    //     onLoop: function () {
-    //         startAlpha = 1 - startAlpha;
-    //     }
-    // })
+    setGroupVisible(finishBtnGroup, false);
 }

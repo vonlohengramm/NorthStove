@@ -16,10 +16,7 @@ preface.create =  function () {
     var title = this.add.image(3445, 3097, 'preface-title');
     uiGroup.add(title);
 
-    uiGroup.children.each(function (ui) {
-        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
-        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
-    });
+    uiGroup.children.each(uiGeneralScale);
 
     var startAlpha = 1;
     this.tweens.add({

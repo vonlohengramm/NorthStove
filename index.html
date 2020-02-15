@@ -3,9 +3,11 @@
 <head>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.22.0/dist/phaser.min.js"></script>
     <script src="js/Const.js"></script>
+    <script src="js/Util.js"></script>
     <script src="js/PrefaceScene.js"></script>
     <script src="js/MenuScene.js"></script>
     <script src="js/PaintScene.js"></script>
+    <script src="js/PostCard.js"></script>
 </head>
 <body>
 
@@ -17,7 +19,7 @@
             width: SCENE_WIDTH * GENERAL_SCALE,
             height: SCENE_HEIGHT * GENERAL_SCALE,
         },
-        scene: [preface, menu, paint],
+        scene: [preface, menu, paint, postCard],
         //  Open the Dev Tools
         //  The version of your game appears after the title in the banner
         title: 'Painter',
