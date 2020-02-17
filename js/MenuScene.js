@@ -17,10 +17,7 @@ menu.create = function () {
     var title = this.add.image(3445, 3622, 'menu-title');
     uiGroup.add(title);
 
-    uiGroup.children.each(function (ui) {
-        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
-        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
-    });
+    uiGroup.children.each(uiGeneralScale);
 
     var picGroup = this.add.group('picGroup');
     var game = this;
@@ -42,10 +39,9 @@ menu.create = function () {
     });
 
     picGroup.children.each(function (pic) {
-        pic.setPosition(pic.x * GENERAL_SCALE, pic.y * GENERAL_SCALE);
-        pic.setScale(GENERAL_SCALE, GENERAL_SCALE);
         pic.setInteractive();
     });
+    picGroup.children.each(uiGeneralScale);
 
     var startAlpha = 1;
     this.tweens.add({

@@ -72,10 +72,7 @@ paint.create = function() {
         picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-' + i));
     }
     picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-2').setBlendMode(Phaser.BlendModes.MULTIPLY));
-    picGroup.children.each(function (pic) {
-        pic.setScale(GENERAL_SCALE, GENERAL_SCALE);
-        pic.setPosition(pic.x * GENERAL_SCALE, pic.y * GENERAL_SCALE);
-    });
+    picGroup.children.each(uiGeneralScale);
 
     var selectColorUI = this.add.image(colorConfig[colorIndex].x * GENERAL_SCALE, colorConfig[colorIndex].y * GENERAL_SCALE, 'select-color').setScale(GENERAL_SCALE, GENERAL_SCALE);
     var changeColorTo = function (index) {
@@ -95,10 +92,7 @@ paint.create = function() {
             changeColorTo(this.index);
         }, {index: i});
     });
-    colorGroup.children.each(function (ui) {
-        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
-        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
-    });
+    colorGroup.children.each(uiGeneralScale);
 
     changeColorTo(colorIndex);
 
@@ -109,6 +103,7 @@ paint.create = function() {
 
     finishBtnBack = this.add.image(4833, 3620, 'finish-btn-back');
     finishBtnGroup.add(finishBtnBack);
+    finishBtnBack.setInteractive();
     // finishBtnFore = this.add.image(4833, 3620, 'finish-btn-fore');
     // promptGroup.add(finishBtnFore);
     finishBtnTxt = this.add.image(4833, 3606, 'finish-btn-txt');
@@ -116,16 +111,13 @@ paint.create = function() {
     finishBtnBack.once('pointerdown', function (event) {
         console.log('jump to post card scene');
         this.scene.start('postCard');
-    });
+    }, this);
 
-    promptGroup.children.each(function (ui) {
-        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
-        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
-    });
-    finishBtnGroup.children.each(function (ui) {
-        ui.setScale(GENERAL_SCALE, GENERAL_SCALE);
-        ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
-    });
+    promptGroup.children.each(uiGeneralScale);
+    finishBtnGroup.children.each(uiGeneralScale)
+    // finishBtnGroup.children.each(function (btn) {
+    //     btn.setInteractive(true);
+    // });
 
     setGroupVisible(finishBtnGroup, false);
 }
