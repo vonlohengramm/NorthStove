@@ -10,7 +10,7 @@ paint.init = function(data) {
 }
 
 paint.preload = function(data) {
-    this.load.image('paint-title', 'png/paint-title.png');
+    this.load.image('paint-title', 'png/paint-title-desc.png');
 
     for (let i = 0; i <= 2; i++) {
         this.load.image('paint-back-' + i, 'png/pic-' + selectPaint + '/back-' + i + '.png');

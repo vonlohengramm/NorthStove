@@ -1,7 +1,7 @@
 var menu = new Phaser.Scene('menu'); // 第二页，选画面
 menu.preload = function () {
     this.load.image('menu-back', 'png/menu-back.jpg');
-    this.load.image('menu-title', 'png/menu-title.png');
+    this.load.image('menu-title', 'png/menu-title-desc.png');
 
     for (let i = 1; i <= 5; i++) {
         this.load.image('pic-' + i, 'png/menu-pic-' + i + '.png');
