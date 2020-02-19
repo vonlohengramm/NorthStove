@@ -3,7 +3,7 @@ preface.preload = function () {
     this.load.image('preface-back', 'png/preface-back.jpg');
     this.load.image('logo', 'png/logo.png');
     this.load.image('prompt-back', 'png/preface-prompt-back.png');
-    this.load.image('preface-title', 'png/preface-title-desc.png');
+    this.load.image('preface-title', 'png/preface-title.png');
 }
 preface.create =  function () {
     var uiGroup = this.add.group('uiGroup');
