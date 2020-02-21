@@ -3,10 +3,14 @@ var paint = new Phaser.Scene('paint'); // 涂色
 var selectPaint = 1;
 var colorIndex = 0;
 var config = picConfig[selectPaint - 1];
+var paintSelected = {};
 
 paint.init = function(data) {
     selectPaint = data.pic;
     config = picConfig[selectPaint - 1];
+
+    paintSelected = {};
+    colorIndex = 0;
 }
 
 paint.preload = function(data) {
@@ -35,7 +39,7 @@ paint.preload = function(data) {
 
 paint.create = function() {
     const promptGroup = this.add.group('promptGroup');
-    promptGroup.add(this.add.image(SCENE_WIDTH / 2, SCENE_HEIGHT / 2, 'menu-back'));
+    this.add.image(SCENE_WIDTH / 2 * GENERAL_SCALE, SCENE_HEIGHT / 2 * GENERAL_SCALE, 'menu-back').setScale(GENERAL_SCALE, GENERAL_SCALE);
 
     const finishBtnGroup = this.add.group('finishBtnGroup');
     
@@ -60,11 +64,15 @@ paint.create = function() {
     const pngXYConfig = config.pngXY;
     for (let i = 0; i < pngXYConfig.length; i++) {
         var image = this.add.image((pngXYConfig[i].x + 197) * GENERAL_SCALE, (pngXYConfig[i].y + 176) * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE, GENERAL_SCALE);
+        image.index = i;
         image.on('pointerdown', function (pointer) {
             var obj = this;
             obj.setTint(colorConfig[colorIndex].color);
             setGroupVisible(promptGroup, false);
             setGroupVisible(finishBtnGroup, true);
+
+            console.log('paint pic:' + obj.index + ' to ' + colorIndex);
+            paintSelected[obj.index] = colorIndex;
         }, image);
         image.setInteractive({ pixelPerfect: true });
     }
@@ -109,8 +117,10 @@ paint.create = function() {
     finishBtnTxt = this.add.image(4833, 3606, 'finish-btn-txt');
     finishBtnGroup.add(finishBtnTxt);
     finishBtnBack.once('pointerdown', function (event) {
+        setGroupVisible(finishBtnGroup, false);
+
         console.log('jump to post card scene');
-        this.scene.start('postCard', { pic: selectPaint });
+        this.scene.start('postCard', { pic: selectPaint, snapShot: image, paintSelected: paintSelected });
     }, this);
 
     promptGroup.children.each(uiGeneralScale);
