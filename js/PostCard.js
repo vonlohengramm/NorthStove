@@ -1,13 +1,11 @@
 var postCard = new Phaser.Scene('postCard'); // 第一页
 
 var selectPaint = 1;
-var snapShot;
 var paintSelected;
 var config = picConfig[selectPaint - 1];
 
 postCard.init = function (data) {
     selectPaint = data.pic;
-    snapShot = data.snapShot;
     paintSelected = data.paintSelected;
     var config = picConfig[selectPaint - 1];
 }
@@ -67,8 +65,26 @@ postCard.create = function () {
     uiGroup.add(this.add.image(4605, 3200, 'post-title').setOrigin(0));
     uiGroup.add(this.add.image(2068, 3567, 'post-title-desc').setOrigin(0));
     uiGroup.add(this.add.image(6354.5, 722, 'post-year'));
-    uiGroup.add(this.add.image(5798, 3018, 'post-code-prompt'));
+    var prompt = this.add.image(5798, 3018, 'post-code-prompt')
+    uiGroup.add(prompt);
 
     uiGroup.children.each(uiGeneralScale);
     picGroup.children.each(uiGeneralScale);
+
+    prompt.setInteractive();
+    prompt.on('pointerdown', function () {
+        var str = '';
+
+        for (var i = 0; i < config.pngXY.length; i++) {
+            var select = paintSelected[i];
+            if (select) {
+                str += select.toString(16);
+            } else {
+                str += 'x';
+            }
+
+        }
+
+        window.open('/post.html?pic=' + selectPaint + '&paintSelected=' + str);
+    }, this);
 }

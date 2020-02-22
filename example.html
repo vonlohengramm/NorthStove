@@ -7,6 +7,11 @@
 <body height="100%">
 
 <script>
+    var url_string = window.location.href; // www.test.com?filename=test
+    var url = new URL(url_string);
+    var paramValue = url.searchParams.get("pic");
+    alert(paramValue)
+
     var config = {
         type: Phaser.AUTO,
         width: 6890,
