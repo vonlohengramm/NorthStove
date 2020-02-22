@@ -57,12 +57,12 @@
             this.load.image('post-year', 'png/post-year.png');
 
             for (let i = 0; i <= 2; i++) {
-                this.load.image('paint-back-' + i, 'png/pic-' + selectPaint + '/back-' + i + '.png');
-                this.load.image('paint-head-' + i, 'png/pic-' + selectPaint + '/pre-' + i + '.png');
+                this.load.image('paint-back-' + i, 'png/pic-' + selectPaint + '-compress/back-' + i + '.png');
+                this.load.image('paint-head-' + i, 'png/pic-' + selectPaint + '-compress/pre-' + i + '.png');
             }
 
             for (let i = 0; i < config.pngXY.length; i++) {
-                this.load.image('paint-' + i, 'png/pic-' + selectPaint + '/paint-' + i + '.png');
+                this.load.image('paint-' + i, 'png/pic-' + selectPaint + '-compress/paint-' + i + '.png');
             }
         }
         
@@ -76,7 +76,7 @@
 
             for (let i = 0; i <= 2; i++) {
                 var back = this.add.image(3454.5, 1825, 'paint-back-' + i);
-                back.setCrop(0, (back.height - 3074) / 2, 5643, 3074);
+                back.setCrop(0, (back.height * 5 - 3074) / 2 / 5, 5643 / 5, 3074 / 5);
                 picGroup.add(back);
             }
 
@@ -84,16 +84,16 @@
             for (let i = 0; i < pngXYConfig.length; i++) {
                 var colorIndex = paintSelected[i];
 
-                var image = this.add.image((pngXYConfig[i].x + 699) * GENERAL_SCALE, (pngXYConfig[i].y - 20.5) * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE, GENERAL_SCALE);
-                // image.setCrop(0, (image.height - 3074 * GENERAL_SCALE) / 2, 5643 * GENERAL_SCALE, 3074 * GENERAL_SCALE);
+                var image = this.add.image((pngXYConfig[i].x + 699) * GENERAL_SCALE, (pngXYConfig[i].y - 20.5) * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE * 5, GENERAL_SCALE * 5);
+                // image.setCrop(0, (image.height - 3074 * GENERAL_SCALE * 5) / 2, 5643 * GENERAL_SCALE * 5, 3074 * GENERAL_SCALE * 5);
                 if (colorIndex) {
                     image.setTint(colorConfig[colorIndex].color);
                 }
             }
-
+            //
             for (let i = 0; i < 2; i++) {
                 var head = this.add.image(3454.5, 1825, 'paint-head-' + i);
-                head.setCrop(0, (head.height - 3074) / 2, 5643, 3074);
+                head.setCrop(0, (back.height * 5 - 3074) / 2 / 5, 5643 / 5, 3074 / 5);
                 picGroup.add(head);
             }
             picGroup.add(this.add.image(3454.5, 1825, 'paint-head-2').setBlendMode(Phaser.BlendModes.MULTIPLY));
@@ -106,7 +106,10 @@
             uiGroup.add(this.add.image(6354.5, 722, 'post-year'));
 
             uiGroup.children.each(uiGeneralScale);
-            picGroup.children.each(uiGeneralScale);
+            picGroup.children.each(function (ui) {
+                ui.setScale(GENERAL_SCALE * 5, GENERAL_SCALE * 5);
+                ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
+            });
         }
     </script>
 
