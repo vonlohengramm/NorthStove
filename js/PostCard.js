@@ -71,6 +71,13 @@ postCard.create = function () {
     uiGroup.children.each(uiGeneralScale);
     picGroup.children.each(uiGeneralScale);
 
+    // var img = document.createElement("img");
+    // img.src = 'http://np.wewow.com.cn:3000/snapshot?pic=1&paintSelected=axb9x3';
+    // img.style.position = 'absolute';
+    // img.style.left = 5971 * GENERAL_SCALE + 'px';
+    // img.style.top = 2865 * GENERAL_SCALE + 'px';
+    // document.body.appendChild(img);
+
     prompt.setInteractive();
     prompt.on('pointerdown', function () {
         var str = '';
