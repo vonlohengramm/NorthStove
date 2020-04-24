@@ -17,12 +17,12 @@ paint.preload = function(data) {
     this.load.image('paint-title', 'png/paint-title.png');
 
     for (let i = 0; i <= 2; i++) {
-        this.load.image('paint-back-' + i, 'png/pic-' + selectPaint + '/back-' + i + '.png');
-        this.load.image('paint-head-' + i, 'png/pic-' + selectPaint + '/pre-' + i + '.png');
+        this.load.image('paint-back-' + i + '-' + selectPaint, 'png/pic-' + selectPaint + '/back-' + i + '.png');
+        this.load.image('paint-head-' + i + '-' + selectPaint, 'png/pic-' + selectPaint + '/pre-' + i + '.png');
     }
 
     for (let i = 0; i < config.pngXY.length; i++) {
-        this.load.image('paint-' + i, 'png/pic-' + selectPaint + '/paint-' + i + '.png');
+        this.load.image('paint-' + i + '-' + selectPaint, 'png/pic-' + selectPaint + '/paint-' + i + '.png');
     }
 
     this.load.image('color-back', 'png/white-frame.jpg');
@@ -59,25 +59,27 @@ paint.create = function() {
     const picGroup = this.add.group('picGroup');
 
     for (let i = 0; i <= 2; i++) {
-        picGroup.add(this.add.image(2952.5, 2021.5, 'paint-back-' + i));
+        picGroup.add(this.add.image(2952.5, 2021.5, 'paint-back-' + i + '-' + selectPaint));
     }
     const pngXYConfig = config.pngXY;
     for (let i = 0; i < pngXYConfig.length; i++) {
-        var image = this.add.image((pngXYConfig[i].x + 197) * GENERAL_SCALE, (pngXYConfig[i].y + 176) * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE, GENERAL_SCALE);
+        var image = this.add.image((pngXYConfig[i].x + 197) * GENERAL_SCALE, (pngXYConfig[i].y + 176) * GENERAL_SCALE, 'paint-' + i + '-' + selectPaint).setScale(GENERAL_SCALE, GENERAL_SCALE);
         image.index = i;
         image.on('pointerdown', function (pointer) {
             var obj = this;
             obj.setTint(colorConfig[colorIndex].color);
             setGroupVisible(promptGroup, false);
             setGroupVisible(finishBtnGroup, true);
+            obj.alpha = 1;
 
             console.log('paint pic:' + obj.index + ' to ' + colorIndex);
             paintSelected[obj.index] = colorIndex;
         }, image);
-        image.setInteractive({ pixelPerfect: true });
+        image.alpha = 0.01;
+        image.setInteractive({ pixelPerfect: true, alphaTolerance: 1 });
     }
     for (let i = 0; i < 2; i++) {
-        picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-' + i));
+        picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-' + i + '-' + selectPaint));
     }
     picGroup.add(this.add.image(2952.5, 2021.5, 'paint-head-2').setBlendMode(Phaser.BlendModes.MULTIPLY));
     picGroup.children.each(uiGeneralScale);

@@ -5,7 +5,9 @@ menu.preload = function () {
 
     for (let i = 1; i <= 5; i++) {
         this.load.image('pic-' + i, 'png/menu-pic-' + i + '.png');
-        this.load.image('pic-title-' + i, 'png/menu-pic-title-' + i + '.png');
+        if (i != 4) {
+            this.load.image('pic-title-' + i, 'png/menu-pic-title-' + i + '.png');
+        }
     }
 
 }
@@ -23,19 +25,23 @@ menu.create = function () {
     var game = this;
     picConfig.forEach(function (v, i) {
        var pic = game.add.image(v.x, v.y, 'pic-' + (i + 1));
-       var picTitle = game.add.image(v.titleX, v.titleY, 'pic-title-' + (i + 1));
        var id = i + 1;
        picGroup.add(pic);
-       picGroup.add(picTitle);
+
        pic.once('pointerdown', function(event) {
            console.log('jump to paint scene with id: ' + id);
            game.scene.start('paint', { pic: i + 1 });
        }, game);
-       picTitle.once('pointerdown', function(event) {
-           console.log('jump to paint scene with id: ' + id);
-           game.scene.start('paint', { pic: i + 1 });
-       }, game);
-       picTitle.depth = 10; // title on top
+
+       if (i != 3) {
+           var picTitle = game.add.image(v.titleX, v.titleY, 'pic-title-' + (i + 1));
+           picGroup.add(picTitle);
+           picTitle.once('pointerdown', function (event) {
+               console.log('jump to paint scene with id: ' + id);
+               game.scene.start('paint', {pic: i + 1});
+           }, game);
+           picTitle.depth = 10; // title on top
+       }
     });
 
     picGroup.children.each(function (pic) {
