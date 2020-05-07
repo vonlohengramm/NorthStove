@@ -104,6 +104,8 @@ postCard.create = function () {
     img.style.position = 'absolute';
     img.style.left = 6000 * GENERAL_SCALE + 'px';
     img.style.top = 2905 * GENERAL_SCALE + 'px';
+    img.style.backgroundImage = "url('png/loading.gif')";
+    img.style.backgroundSize = '55px';
     img.width = 55;
     img.height = 55;
     document.body.appendChild(img);
