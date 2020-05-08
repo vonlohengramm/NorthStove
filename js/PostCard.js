@@ -22,8 +22,8 @@ postCard.preload = function () {
     this.load.image('post-icon-1', 'png/post-icon-1.png');
     this.load.image('post-icon-2', 'png/post-icon-2.png');
 
-    this.load.image('post-title', 'png/pic-' + selectPaint + '/title.png');
-    this.load.image('post-title-desc', 'png/pic-' + selectPaint + '/title-desc.png')
+    this.load.image('post-title-' + selectPaint, 'png/pic-' + selectPaint + '/title.png');
+    this.load.image('post-title-desc-' + selectPaint, 'png/pic-' + selectPaint + '/title-desc.png')
     this.load.image('post-year', 'png/post-year.png');
 
     this.load.image('btn-back', 'png/back.jpg');
@@ -67,8 +67,8 @@ postCard.create = function () {
     uiGroup.add(this.add.image(3454.5, 1825, 'post-back-2'));
     uiGroup.add(this.add.image(844, 3612, 'post-icon-1'));
     uiGroup.add(this.add.image(1548.5, 3632.5, 'post-icon-2'));
-    uiGroup.add(this.add.image(4605, 3200, 'post-title').setOrigin(0));
-    uiGroup.add(this.add.image(2068, 3567, 'post-title-desc').setOrigin(0));
+    uiGroup.add(this.add.image(4605, 3200, 'post-title-' + selectPaint).setOrigin(0));
+    uiGroup.add(this.add.image(2068, 3567, 'post-title-desc-' + selectPaint).setOrigin(0));
     uiGroup.add(this.add.image(6354.5, 722, 'post-year'));
     var prompt = this.add.image(5798, 3018, 'post-code-prompt')
     uiGroup.add(prompt);
