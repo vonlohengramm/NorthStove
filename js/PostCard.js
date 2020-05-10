@@ -52,7 +52,7 @@ postCard.create = function () {
         if (pngXYConfig[i].cutY) {
             image.setCrop(0, 0, image.width, image.height - pngXYConfig[i].cutY);
         }
-        if (colorIndex) {
+        if (colorIndex != null) {
             image.setTint(colorConfig[colorIndex].color);
         }
     }
