@@ -93,7 +93,7 @@ postCard.create = function () {
     var str = '';
     for (var i = 0; i < config.pngXY.length; i++) {
         var select = paintSelected[i];
-        if (select) {
+        if (select != null) {
             str += select.toString(16);
         } else {
             str += 'x';

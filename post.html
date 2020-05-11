@@ -46,24 +46,28 @@
             this.load.image('post-back-0', 'png/post-back-0.png');
             this.load.image('post-back-1', 'png/post-back-1.jpg');
             this.load.image('post-back-2', 'png/post-back-2.png');
+            // this.load.image('post-snap-test', 'png/post-snap-test.png');
 
+            this.load.image('post-code-prompt', 'png/post-code-prompt.png');
             this.load.image('post-year', 'png/post-year.png');
 
             this.load.image('post-icon-1', 'png/post-icon-1.png');
             this.load.image('post-icon-2', 'png/post-icon-2.png');
 
-            this.load.image('post-title', 'png/pic-' + selectPaint + '/title.png');
-            this.load.image('post-title-desc', 'png/pic-' + selectPaint + '/title-desc.png')
+            this.load.image('post-title-' + selectPaint, 'png/pic-' + selectPaint + '/title.png');
+            this.load.image('post-title-desc-' + selectPaint, 'png/pic-' + selectPaint + '/title-desc.png')
             this.load.image('post-year', 'png/post-year.png');
 
             for (let i = 0; i <= 2; i++) {
-                this.load.image('paint-back-' + i, 'png/pic-' + selectPaint + '-compress/back-' + i + '.png');
-                this.load.image('paint-head-' + i, 'png/pic-' + selectPaint + '-compress/pre-' + i + '.png');
+                this.load.image('paint-back-' + i + '-' + selectPaint, 'png/pic-' + selectPaint + '/back-' + i + '.png');
+                this.load.image('paint-head-' + i + '-' + selectPaint, 'png/pic-' + selectPaint + '/pre-' + i + '.png');
             }
 
             for (let i = 0; i < config.pngXY.length; i++) {
-                this.load.image('paint-' + i, 'png/pic-' + selectPaint + '-compress/paint-' + i + '.png');
+                this.load.image('paint-' + i + '-' + selectPaint, 'png/pic-' + selectPaint + '/paint-' + i + '.png');
             }
+
+            this.load.image('btn-back', 'png/back.jpg');
         }
         
         function create() {
@@ -75,8 +79,8 @@
             const picGroup = this.add.group('picGroup');
 
             for (let i = 0; i <= 2; i++) {
-                var back = this.add.image(3454.5, 1825, 'paint-back-' + i);
-                back.setCrop(0, (back.height * 5 - 3074) / 2 / 5, 5643 / 5, 3074 / 5);
+                var back = this.add.image(3454.5, 1825, 'paint-back-' + i + '-' + selectPaint);
+                back.setCrop(0, (back.height - 3074) / 2, 5643, 3074);
                 picGroup.add(back);
             }
 
@@ -84,32 +88,32 @@
             for (let i = 0; i < pngXYConfig.length; i++) {
                 var colorIndex = paintSelected[i];
 
-                var image = this.add.image((pngXYConfig[i].x + 699) * GENERAL_SCALE, (pngXYConfig[i].y - 20.5) * GENERAL_SCALE, 'paint-' + i).setScale(GENERAL_SCALE * 5, GENERAL_SCALE * 5);
-                // image.setCrop(0, (image.height - 3074 * GENERAL_SCALE * 5) / 2, 5643 * GENERAL_SCALE * 5, 3074 * GENERAL_SCALE * 5);
-                if (colorIndex) {
+                var image = this.add.image((pngXYConfig[i].x + 699) * GENERAL_SCALE, (pngXYConfig[i].y - 20.5) * GENERAL_SCALE, 'paint-' + i + '-' + selectPaint).setScale(GENERAL_SCALE, GENERAL_SCALE);
+                // image.setCrop(0, (image.height - 3074 * GENERAL_SCALE) / 2, 5643 * GENERAL_SCALE, 3074 * GENERAL_SCALE);
+                if (pngXYConfig[i].cutY) {
+                    image.setCrop(0, 0, image.width, image.height - pngXYConfig[i].cutY);
+                }
+                if (colorIndex != null) {
                     image.setTint(colorConfig[colorIndex].color);
                 }
             }
-            //
+
             for (let i = 0; i < 2; i++) {
-                var head = this.add.image(3454.5, 1825, 'paint-head-' + i);
-                head.setCrop(0, (back.height * 5 - 3074) / 2 / 5, 5643 / 5, 3074 / 5);
+                var head = this.add.image(3454.5, 1825, 'paint-head-' + i + '-' + selectPaint);
+                head.setCrop(0, (head.height - 3074) / 2, 5643, 3074);
                 picGroup.add(head);
             }
-            picGroup.add(this.add.image(3454.5, 1825, 'paint-head-2').setBlendMode(Phaser.BlendModes.MULTIPLY));
+            picGroup.add(this.add.image(3454.5, 1825, 'paint-head-2' + '-' + selectPaint).setBlendMode(Phaser.BlendModes.MULTIPLY));
 
             uiGroup.add(this.add.image(3454.5, 1825, 'post-back-2'));
             uiGroup.add(this.add.image(844, 3612, 'post-icon-1'));
             uiGroup.add(this.add.image(1548.5, 3632.5, 'post-icon-2'));
-            uiGroup.add(this.add.image(4605, 3200, 'post-title').setOrigin(0));
-            uiGroup.add(this.add.image(2068, 3567, 'post-title-desc').setOrigin(0));
+            uiGroup.add(this.add.image(4605, 3200, 'post-title-' + selectPaint).setOrigin(0));
+            uiGroup.add(this.add.image(2068, 3567, 'post-title-desc-' + selectPaint).setOrigin(0));
             uiGroup.add(this.add.image(6354.5, 722, 'post-year'));
 
             uiGroup.children.each(uiGeneralScale);
-            picGroup.children.each(function (ui) {
-                ui.setScale(GENERAL_SCALE * 5, GENERAL_SCALE * 5);
-                ui.setPosition(ui.x * GENERAL_SCALE, ui.y * GENERAL_SCALE);
-            });
+            picGroup.children.each(uiGeneralScale);
         }
     </script>
 
