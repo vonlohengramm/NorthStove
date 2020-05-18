@@ -24,6 +24,7 @@
                 }
             }
         }
+        console.log(paintSelected);
 
         var gameConfig = {
             type: Phaser.AUTO,
@@ -90,10 +91,14 @@
             for (let i = 0; i < pngXYConfig.length; i++) {
                 var colorIndex = paintSelected[i];
 
+                if (colorIndex != null) {
+                    console.log(i + ':' + colorIndex + ",  " + colorConfig[colorIndex].color);
+                }
+
                 var image = this.add.image((pngXYConfig[i].x + 699) * scale, (pngXYConfig[i].y - 20.5) * scale, 'paint-' + i + '-' + selectPaint);
                 // image.setCrop(0, (image.height - 3074 * GENERAL_SCALE) / 2, 5643 * GENERAL_SCALE, 3074 * GENERAL_SCALE);
                 if (pngXYConfig[i].cutY) {
-                    image.setCrop(0, 0, image.width, image.height - pngXYConfig[i].cutY);
+                    image.setCrop(0, 0, image.width, image.height - pngXYConfig[i].cutY * scale);
                 }
                 if (colorIndex != null) {
                     image.setTint(colorConfig[colorIndex].color);
